@@ -1,0 +1,21 @@
+#!/bin/bash
+
+db_name="universite_test"
+db_user="root"
+db_pass=""
+backup_dir="$home/mysql_backup"
+backup_file="$backup_dir/backup.sql"
+
+mkdir -p $backup_dir
+
+echo "backup en cours"
+mysqldump -u $db_user -p$db_pass $db_name > $backup_file
+echo "backup termine"
+
+echo "analyze table etudiant"
+mysql -u $db_user -p$db_pass -e "analyze table $db_name.ETUDIANT;"
+
+echo "optimize table etudiant"
+mysql -u $db_user -p$db_pass -e "optimize table $db_name.ETUDINAT;"
+
+echo "fin"
